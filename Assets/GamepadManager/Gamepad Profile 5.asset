@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d487d5c82b81ba4b81962047f7638f6, type: 3}
+  m_Name: Gamepad Profile 5
+  m_EditorClassIdentifier: 
+  axis:
+  - name: Horizontal
+    PS4:
+    - PS4_Axis: 1
+      Invert: 0
+    Xbox:
+    - Xbox_Axis: 1
+      Invert: 0
+    JoyCon:
+      JoyCon_Axis: 9
+      Invert: 0
+  - name: Vertical
+    PS4:
+    - PS4_Axis: 2
+      Invert: 1
+    Xbox:
+    - Xbox_Axis: 2
+      Invert: 1
+    JoyCon:
+      JoyCon_Axis: 10
+      Invert: 0
+  - name: LeftTrigger
+    PS4:
+    - PS4_Axis: 7
+      Invert: 1
+    Xbox:
+    - Xbox_Axis: 9
+      Invert: 0
+    JoyCon:
+      JoyCon_Axis: 9
+      Invert: 0
+  - name: RightTrigger
+    PS4:
+    - PS4_Axis: 8
+      Invert: 1
+    Xbox:
+    - Xbox_Axis: 10
+      Invert: 0
+    JoyCon:
+      JoyCon_Axis: 10
+      Invert: 0
+  - name: AltHorizontal
+    PS4:
+    - PS4_Axis: 3
+      Invert: 0
+    Xbox:
+    - Xbox_Axis: 4
+      Invert: 0
+    JoyCon:
+      JoyCon_Axis: 9
+      Invert: 0
+  - name: AltVertical
+    PS4:
+    - PS4_Axis: 6
+      Invert: 1
+    Xbox:
+    - Xbox_Axis: 5
+      Invert: 1
+    JoyCon:
+      JoyCon_Axis: 10
+      Invert: 0
+  buttons:
+  - name: Fire1
+    PS4: 01000000
+    Xbox: 00000000
+    JoyCon: 00000000
+  - name: Fire2
+    PS4: 02000000
+    Xbox: 01000000
+    JoyCon: 01000000
+  - name: Fire3
+    PS4: 00000000
+    Xbox: 02000000
+    JoyCon: 02000000
+  - name: Fire4
+    PS4: 03000000
+    Xbox: 03000000
+    JoyCon: 03000000
+  - name: Fire5
+    PS4: 04000000
+    Xbox: 04000000
+    JoyCon: 04000000
+  - name: Fire6
+    PS4: 05000000
+    Xbox: 05000000
+    JoyCon: 05000000
+  - name: Start
+    PS4: 09000000
+    Xbox: 07000000
+    JoyCon: 0800000009000000
+  buttonsForUI:
+  - name: Submit
+    PS4: 2
+    Xbox: 0
+    JoyCon: 1
+  - name: Cancel
+    PS4: 1
+    Xbox: 1
+    JoyCon: 0
