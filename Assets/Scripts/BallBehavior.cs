@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
 {
+    public bool bounceOnWall = true;
+
     private float _initialVelocity;
     private int _bounceCount;
     private Vector3 _lastFrameVelocity;
@@ -39,6 +41,11 @@ public class BallBehavior : MonoBehaviour
         return _rigidbody.velocity.magnitude;
     }
 
+    public void SetVelocity(float multiplier)
+    {
+        _rigidbody.velocity *= multiplier;
+    }
+
     public bool GetCreateByAssist()
     {
         return _createByAssist;
@@ -54,8 +61,18 @@ public class BallBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Bounce")
-            Bounce(collision.contacts[0].normal);
+        if (bounceOnWall)
+        {
+            if (collision.gameObject.tag == "Bounce")
+                Bounce(collision.contacts[0].normal);
+            else
+                gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+        
     }
 
     private void Bounce(Vector3 collisionNormal)

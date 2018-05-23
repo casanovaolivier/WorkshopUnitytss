@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class AssistBehavior : MonoBehaviour
 {
+    public enum AssistState { Shield, AutoFire, MultiplyFire, MultiplyVelocity }
+
     public PlayerBehavior playerToFollow;
     public BallBehavior shootBallPrefab;
+
+    [Header("Movement")]
     public Vector3 offsetToPlayer;
     [Range(0f, 1f)] public float smoothSpeed = 0.125f;
 
+    [Header("Actions")]
+    public AssistState startState;
+    [Range(0.01f, 5f)] public float autoFireTime = 0.2f;
+    [Range(1f, 100f)] public float autoFireVelocity = 25f;
+    [Range(1f, 10f)] public float multiplyVelocity = 2f;
+
+    private AssistState _currentState;
     private Rigidbody _rigidbody;
+
+    private float _lastAutoFireTime;
 
     private float _lastInputAngle;
     private Quaternion _lastInputRotation;
@@ -18,41 +31,80 @@ public class AssistBehavior : MonoBehaviour
     private float _horizontal = 0f;
     private float _vertical = 0f;
 
+    private int _assistStateLength;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _currentState = startState;
+        _assistStateLength = System.Enum.GetValues(typeof(AssistState)).Length;
+
+        Debug.Log("=> Assit State Change : " + _currentState.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PlayerBall")
+        if (other.gameObject.tag == "PlayerBall" && (_currentState == AssistState.MultiplyFire || _currentState == AssistState.MultiplyVelocity))
         {
-            BallBehavior bb0 = other.gameObject.GetComponent<BallBehavior>();
-            bool createByAssist = bb0.GetCreateByAssist();
-            float velocity = bb0.GetVelocity();
-            other.gameObject.SetActive(false);
+            BallBehavior bb = other.gameObject.GetComponent<BallBehavior>();
+            bool createByAssist = bb.GetCreateByAssist();
+            float velocity = bb.GetVelocity();
 
-            if (!createByAssist)
+            switch (_currentState)
             {
-                BallBehavior bb1 = SpawnManager.Instance.GetPooledBall();
-                bb1.transform.position = transform.position + (-transform.right * 1.25f);
-                bb1.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, -90f, 0f));
-                bb1.Init(velocity, "PlayerBall", true);
+                case AssistState.MultiplyFire:
+                    if (!createByAssist)
+                    {
+                        other.gameObject.SetActive(false);
 
-                BallBehavior bb2 = SpawnManager.Instance.GetPooledBall();
-                bb2.transform.position = transform.position + (-transform.forward * 1.25f);
-                bb2.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, 180f, 0f));
-                bb2.Init(velocity, "PlayerBall", true);
+                        BallBehavior bb1 = SpawnManager.Instance.GetPooledBall();
+                        bb1.transform.position = Vector3.up + transform.position + (-transform.right * 1.25f);
+                        bb1.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, -90f, 0f));
+                        bb1.Init(velocity, "PlayerBall", true);
 
-                BallBehavior bb3 = SpawnManager.Instance.GetPooledBall();
-                bb3.transform.position = transform.position + (transform.right * 1.25f);
-                bb3.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, 90f, 0f));
-                bb3.Init(velocity, "PlayerBall", true);
+                        BallBehavior bb2 = SpawnManager.Instance.GetPooledBall();
+                        bb2.transform.position = Vector3.up + transform.position + (-transform.forward * 1.25f);
+                        bb2.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, 180f, 0f));
+                        bb2.Init(velocity, "PlayerBall", true);
+
+                        BallBehavior bb3 = SpawnManager.Instance.GetPooledBall();
+                        bb3.transform.position = Vector3.up + transform.position + (transform.right * 1.25f);
+                        bb3.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, 90f, 0f));
+                        bb3.Init(velocity, "PlayerBall", true);
+                    }
+                    break;
+                case AssistState.MultiplyVelocity:
+                    bb.SetVelocity(2f);
+                    break;
+            }
+
+
+        }
+        else if (other.gameObject.tag == "EnemyBall" && (_currentState == AssistState.Shield))
+        {
+            switch(_currentState)
+            {
+                case AssistState.Shield:
+                    other.gameObject.SetActive(false);
+                    break;
             }
         }
-        else if (other.gameObject.tag == "EnemyBall")
+    }
+
+    private void Update()
+    {
+        switch(_currentState)
         {
-            other.gameObject.SetActive(false);
+            case AssistState.AutoFire:
+                if (Time.time - _lastAutoFireTime > autoFireTime)
+                {
+                    BallBehavior bb = SpawnManager.Instance.GetPooledBall();
+                    bb.transform.position = Vector3.up + transform.position + (-transform.forward * 1.25f);
+                    bb.transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0f, 180f, 0f));
+                    bb.Init(autoFireVelocity, "PlayerBall", true);
+                    _lastAutoFireTime = Time.time;
+                }
+                break;
         }
     }
 
@@ -66,7 +118,6 @@ public class AssistBehavior : MonoBehaviour
         _lastInputRotation = Quaternion.Lerp(_lastInputRotation, Quaternion.AngleAxis(_lastInputAngle, Vector3.up), smoothSpeed);
         _rigidbody.transform.position = playerToFollow.transform.position + (_lastInputRotation * offsetToPlayer);
         _rigidbody.transform.LookAt(playerToFollow.transform.position);
-        //_forceAlignToPlayer = false;
     }
 
     public void SetMoveValue(float horizontal, float vertical)
@@ -78,6 +129,34 @@ public class AssistBehavior : MonoBehaviour
     public void AlignWithPlayer(bool a)
     {
         _forceAlignToPlayer = a;
+    }
+
+    public void SetState(AssistState ast)
+    {
+        _currentState = ast;
+        Debug.Log("=> Assit State Change : " + _currentState.ToString());
+    }
+
+    public void SetState(float f)
+    {
+       if (f >= 1)
+       {
+            int ns = (int)_currentState + 1;
+
+            if (ns >= _assistStateLength) _currentState = (AssistState)0;
+            else _currentState = (AssistState)ns;
+
+            Debug.Log("=> Assit State Change : " + _currentState.ToString());
+        }
+       else if (f <= -1)
+       {
+            int ns = (int)_currentState - 1;
+
+            if (ns < 0) _currentState = (AssistState)(_assistStateLength - 1);
+            else _currentState = (AssistState)ns;
+
+            Debug.Log("=> Assit State Change : " + _currentState.ToString());
+        }
     }
 
 }

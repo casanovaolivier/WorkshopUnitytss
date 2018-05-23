@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - PlayerBall
   - EnemyBall
+  - FxTemporaire
+  - LifeBonus
+  - SpeedBonus
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Attackable
   - 
   - 
   - 

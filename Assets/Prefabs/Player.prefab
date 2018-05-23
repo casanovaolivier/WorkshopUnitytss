@@ -265,6 +265,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 23bb073cf5c9c5640b69dd3c79ce219e, type: 2}
   m_StaticBatchInfo:
@@ -299,6 +300,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: cd3edccc3052e1a4992c1f26dd8217ba, type: 2}
   m_StaticBatchInfo:
@@ -390,6 +392,15 @@ MonoBehaviour:
   shootMinVelocity: 25
   shootMaxVelocity: 100
   shootBufferTime: 0.1
+  gameoverPanelUi: {fileID: 0}
+  sliderLife: {fileID: 0}
+  startLife: 50
+  maxLife: 100
+  regenLifePerSeconds: 1
+  damagePerHit: 10
+  lifePerBonus: 20
+  bonusSpeedDuration: 10
+  bonusSpeedVelocity: 12.5
 --- !u!114 &114716771511745482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -402,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentControlsType: 0
+  currentShootType: 1
 --- !u!120 &120945297314822402
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -415,6 +427,7 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 34bb53d4107e9b74f9222ab02ac7f8dc, type: 2}
   m_StaticBatchInfo:
@@ -443,12 +456,15 @@ LineRenderer:
     widthCurve:
       serializedVersion: 2
       m_Curve:
-      - serializedVersion: 2
+      - serializedVersion: 3
         time: 0
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0

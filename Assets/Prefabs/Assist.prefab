@@ -70,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1917192701464718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5.5}
+  m_LocalPosition: {x: 0, y: 0, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4769675441108482}
@@ -97,13 +97,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1707647087530550}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 35, y: 35, z: 35}
   m_Children: []
   m_Father: {fileID: 4263410270677102}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!23 &23528281715028498
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -117,8 +117,9 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: c82e2ad697a68664eb541c47b9f7db53, type: 2}
+  - {fileID: 2100000, guid: 913ff3ac8960e44aa98796de4ef75274, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +145,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1707647087530550}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300002, guid: 3d5fab60a41c6413693dfe208d61717b, type: 3}
 --- !u!54 &54677771539485440
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -174,6 +175,7 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 34bb53d4107e9b74f9222ab02ac7f8dc, type: 2}
   m_StaticBatchInfo:
@@ -202,25 +204,31 @@ TrailRenderer:
     widthCurve:
       serializedVersion: 2
       m_Curve:
-      - serializedVersion: 2
+      - serializedVersion: 3
         time: 0
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - serializedVersion: 2
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 1
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.99607843, g: 0.80784315, b: 0.08235294, a: 1}
-      key1: {r: 0.99607843, g: 0.80784315, b: 0.08235294, a: 0}
+      key0: {r: 0.082352914, g: 0.7687459, b: 0.9843137, a: 0.4509804}
+      key1: {r: 0.08235296, g: 0.99607843, b: 0.25187662, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -279,8 +287,12 @@ MonoBehaviour:
   playerToFollow: {fileID: 0}
   shootBallPrefab: {fileID: 114613390295268218, guid: 04ccf54fff9fcde4db2bb487359d648e,
     type: 2}
-  offsetToPlayer: {x: 0, y: 0, z: 5.5}
-  smoothSpeed: 0.075
+  offsetToPlayer: {x: 0, y: 0, z: 2.5}
+  smoothSpeed: 0.2
+  startState: 3
+  autoFireTime: 1
+  autoFireVelocity: 25
+  multiplyVelocity: 2
 --- !u!135 &135817192463502030
 SphereCollider:
   m_ObjectHideFlags: 1

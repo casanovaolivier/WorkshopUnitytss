@@ -46,6 +46,8 @@ public class AssistInput : MonoBehaviour
             _player = GameObject.FindGameObjectWithTag("Player");
         }
 
+        _assist.SetState(Input.mouseScrollDelta.y);
+
         _assist.AlignWithPlayer(Input.GetMouseButton(1));
     }
 
@@ -54,6 +56,26 @@ public class AssistInput : MonoBehaviour
         float ah = Input.GetAxis("Joystick1Axis4");
         float av = Input.GetAxis("Joystick1Axis5");
         _assist.SetMoveValue(ah, -av);
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        {
+            _assist.SetState(AssistBehavior.AssistState.Shield);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+        {
+            _assist.SetState(AssistBehavior.AssistState.AutoFire);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button2))
+        {
+            _assist.SetState(AssistBehavior.AssistState.MultiplyFire);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button3))
+        {
+            _assist.SetState(AssistBehavior.AssistState.MultiplyVelocity);
+        }
 
         _assist.AlignWithPlayer(Input.GetKey(KeyCode.Joystick1Button4));
     }
@@ -68,6 +90,26 @@ public class AssistInput : MonoBehaviour
         float ah = GamepadInput.GetAxis("AltHorizontal", _state.Type, _state.Id);
         float av = GamepadInput.GetAxis("AltVertical", _state.Type, _state.Id);
         _assist.SetMoveValue(ah, av);
+
+        if (GamepadInput.GetButton("Fire1", _state.Type, _state.Id))
+        {
+            _assist.SetState(AssistBehavior.AssistState.Shield);
+        }
+
+        if (GamepadInput.GetButton("Fire2", _state.Type, _state.Id))
+        {
+            _assist.SetState(AssistBehavior.AssistState.AutoFire);
+        }
+
+        if (GamepadInput.GetButton("Fire3", _state.Type, _state.Id))
+        {
+            _assist.SetState(AssistBehavior.AssistState.MultiplyFire);
+        }
+
+        if (GamepadInput.GetButton("Fire4", _state.Type, _state.Id))
+        {
+            _assist.SetState(AssistBehavior.AssistState.MultiplyVelocity);
+        }
 
         _assist.AlignWithPlayer(GamepadInput.GetButton("Fire5", _state.Type, _state.Id));
     }

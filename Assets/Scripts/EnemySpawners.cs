@@ -43,9 +43,10 @@ public class EnemySpawners : MonoBehaviour
 
                 yield return new WaitForSeconds(spawnDelay);
 
-                _spawnEnemys.RemoveAll(s => s.gameObject.activeSelf == false);
+                //_spawnEnemys.RemoveAll(s => s.gameObject.activeSelf == false);
+                //Debug.Log(_spawnEnemys.Count);
 
-                yield return new WaitUntil(() => _spawnEnemys.Count < maxSimultaneousEnemy);
+                yield return new WaitUntil(() => _spawnEnemys.RemoveAll(s => s.gameObject.activeSelf == false) == 1000 ||  _spawnEnemys.Count < maxSimultaneousEnemy);
             }
             
             yield return new WaitForSeconds(waveDelay);

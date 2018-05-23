@@ -7,6 +7,9 @@ public class PlayerInput : MonoBehaviour
     public enum ControlsType { Keyboard, Gamepad, GamepadManager }
     public ControlsType currentControlsType;
 
+    public enum ShootType { WithTriggers, WithStick }
+    public ShootType currentShootType;
+
     private PlayerBehavior _player;
     private GamepadInfo _state;
 
@@ -42,17 +45,30 @@ public class PlayerInput : MonoBehaviour
 
         _player.SetRunValue(Input.GetKey(KeyCode.LeftShift));
 
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
-            _player.InstantShootAttack();
+        switch(currentShootType)
+        {
+            case ShootType.WithTriggers:
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+                    _player.InstantShootAttack();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            _player.InitShootAttack();
+                if (Input.GetKeyDown(KeyCode.Space))
+                    _player.InitShootAttack();
 
-        if (Input.GetKey(KeyCode.Space))
-            _player.UpdateShootAttack();
+                if (Input.GetKey(KeyCode.Space))
+                    _player.UpdateShootAttack();
 
-        if (Input.GetKeyUp(KeyCode.Space))
-            _player.FinalizeShootAttack();
+                if (Input.GetKeyUp(KeyCode.Space))
+                    _player.FinalizeShootAttack();
+                break;
+            case ShootType.WithStick:
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+                {
+                    Vector3 playerPos = Camera.main.WorldToScreenPoint(_player.transform.position);
+                    Vector3 relativePos = (Input.mousePosition - playerPos).normalized;
+                    _player.InstantShootAttack(relativePos.x, relativePos.y);
+                }
+                break;
+        }
     }
 
     private void UpdateForGamepad()
@@ -72,25 +88,35 @@ public class PlayerInput : MonoBehaviour
         }
         _prevLT = lt;
 
-        float rt = Input.GetAxis("Joystick1Axis10");
-        if (rt > 0f && _prevRT == 0f)  // RT Down
+        switch (currentShootType)
         {
-            _player.InstantShootAttack();
-        }
-        else if (rt > 0f && _prevRT > 0f) // RT Stay
-        {
-            _player.InstantShootAttack();
-        }
-        _prevRT = rt;
+            case ShootType.WithTriggers:
+                float rt = Input.GetAxis("Joystick1Axis10");
+                if (rt > 0f && _prevRT == 0f)  // RT Down
+                {
+                    _player.InstantShootAttack();
+                }
+                else if (rt > 0f && _prevRT > 0f) // RT Stay
+                {
+                    _player.InstantShootAttack();
+                }
+                _prevRT = rt;
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5))
-            _player.InitShootAttack();
+                if (Input.GetKeyDown(KeyCode.Joystick1Button5))
+                    _player.InitShootAttack();
 
-        if (Input.GetKey(KeyCode.Joystick1Button5))
-            _player.UpdateShootAttack();
+                if (Input.GetKey(KeyCode.Joystick1Button5))
+                    _player.UpdateShootAttack();
 
-        if (Input.GetKeyUp(KeyCode.Joystick1Button5))
-            _player.FinalizeShootAttack();
+                if (Input.GetKeyUp(KeyCode.Joystick1Button5))
+                    _player.FinalizeShootAttack();
+                break;
+            case ShootType.WithStick:
+                float ah = Input.GetAxis("Joystick1Axis4");
+                float av = Input.GetAxis("Joystick1Axis5");
+                _player.InstantShootAttack(ah, -av);
+                break;
+        }  
     }
 
     private void UpdateForGamepadManager()
@@ -115,24 +141,34 @@ public class PlayerInput : MonoBehaviour
         }
         _prevLT = lt;
 
-        float rt = GamepadInput.GetAxis("RightTrigger", _state.Type, _state.Id);
-        if (rt > 0f && _prevRT == 0f)  // RT Down
+        switch (currentShootType)
         {
-            _player.InstantShootAttack();
+            case ShootType.WithTriggers:
+                float rt = GamepadInput.GetAxis("RightTrigger", _state.Type, _state.Id);
+                if (rt > 0f && _prevRT == 0f)  // RT Down
+                {
+                    _player.InstantShootAttack();
+                }
+                else if (rt > 0f && _prevRT > 0f) // RT Stay
+                {
+                    _player.InstantShootAttack();
+                }
+                _prevRT = rt;
+
+                if (GamepadInput.GetButtonDown("Fire6", _state.Type, _state.Id))
+                    _player.InitShootAttack();
+
+                if (GamepadInput.GetButton("Fire6", _state.Type, _state.Id))
+                    _player.UpdateShootAttack();
+
+                if (GamepadInput.GetButtonUp("Fire6", _state.Type, _state.Id))
+                    _player.FinalizeShootAttack();
+                break;
+            case ShootType.WithStick:
+                float ah = GamepadInput.GetAxis("AltHorizontal", _state.Type, _state.Id);
+                float av = GamepadInput.GetAxis("AltVertical", _state.Type, _state.Id);
+                _player.InstantShootAttack(ah, av);
+                break;
         }
-        else if (rt > 0f && _prevRT > 0f) // RT Stay
-        {
-            _player.InstantShootAttack();
-        }
-        _prevRT = rt;
-
-        if (GamepadInput.GetButtonDown("Fire6", _state.Type, _state.Id))
-            _player.InitShootAttack();
-
-        if (GamepadInput.GetButton("Fire6", _state.Type, _state.Id))
-            _player.UpdateShootAttack();
-
-        if (GamepadInput.GetButtonUp("Fire6", _state.Type, _state.Id))
-            _player.FinalizeShootAttack();
     }
 }
