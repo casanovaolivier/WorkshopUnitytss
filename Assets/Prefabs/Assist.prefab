@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 114240794821689168}
   - component: {fileID: 114751831580563754}
   - component: {fileID: 54677771539485440}
-  - component: {fileID: 135817192463502030}
+  - component: {fileID: 65393505932200302}
   m_Layer: 0
   m_Name: Assist
   m_TagString: Untagged
@@ -98,8 +98,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1707647087530550}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 35, y: 35, z: 35}
+  m_LocalPosition: {x: 2e-15, y: 0.99618, z: -0.0080247}
+  m_LocalScale: {x: 54.479893, y: 54.47994, z: 54.47994}
   m_Children: []
   m_Father: {fileID: 4263410270677102}
   m_RootOrder: 0
@@ -161,6 +161,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 1
+--- !u!65 &65393505932200302
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1917192701464718}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5865123, y: 0.613152, z: 0.6246073}
+  m_Center: {x: 0.0010768175, y: 1.0101779, z: -0.0052644014}
 --- !u!96 &96348124013202490
 TrailRenderer:
   serializedVersion: 2
@@ -289,19 +301,7 @@ MonoBehaviour:
     type: 2}
   offsetToPlayer: {x: 0, y: 0, z: 2.5}
   smoothSpeed: 0.2
-  startState: 3
+  startState: 2
   autoFireTime: 1
   autoFireVelocity: 25
   multiplyVelocity: 2
---- !u!135 &135817192463502030
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1917192701464718}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 1, z: 0}
