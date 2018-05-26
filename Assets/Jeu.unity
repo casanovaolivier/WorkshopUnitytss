@@ -59380,10 +59380,13 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1aa215fb96851b743a70fc822d80f636, type: 2}
+<<<<<<< HEAD
     - target: {fileID: 100000, guid: db0828e9a9284b943b5b851748d7a0a2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+=======
+>>>>>>> parent of 78353f6... Final version props
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: db0828e9a9284b943b5b851748d7a0a2, type: 3}
   m_IsPrefabParent: 0
@@ -64919,10 +64922,13 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 19.399
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 100000, guid: 626aca484d257f340af3e31669005a48, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+=======
+>>>>>>> parent of 78353f6... Final version props
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 626aca484d257f340af3e31669005a48, type: 3}
   m_IsPrefabParent: 0
